@@ -1,0 +1,38 @@
+feladat:
+
+Megye adatai-- egy beleírható kereső mező megyére---ami kiadja a települései számát összes lakosát és városok lakosait
+
+Település típusai---- 2 gomb 2 külön oldalra vezet közösség vagy város oldal. itt közösségre vagy városra lehet rákeresni majd kiírja
+
+
+amit a gemini mondott hogy baszni kell a file-al:
+
+
+### Hogyan kötsd össze a PowerPoint (PPT) prezentációval?
+
+A PowerPoint gombjaihoz kétféle módon rendelhetsz hozzá Python funkciókat:
+
+#### 1. Módszer: PowerPoint gomb megnyitása Akcióval (A legegyszerűbb)
+1. Nyisd meg a PowerPointot, és hozz létre a 2. dián 3 gombot (Alakzatok / Shapes -> Gomb).
+2. Jelöld ki az **1: Megye adatai** gombot.
+3. Menj a **Beszúrás (Insert)** -> **Művelet (Action)** menüpontra.
+4. Válaszd a **Program indítása (Run program)** opciót, majd tallózd be a `python.exe` vagy a `lakossag_app.py` fájlodat.
+
+#### 2. Módszer: VBA Makró használata (Ha dián belüli ugrásokat szeretnél)
+A PPT-ben a 2. oldal gombjai ugrhatnak a megfelelő diákra, a keresést pedig VBA-val kiegészített Python hívással végezheted el:
+
+1. A PowerPointban nyomd meg az `ALT + F11` billentyűkombinációt (VBA szerkesztő).
+2. Szúrj be egy új Modult (`Insert -> Module`), majd másold be az alábbi kódot:
+
+```vba
+Sub InditPythonAlkalmazas()
+    Dim objShell As Object
+    Set objShell = CreateObject("WScript.Shell")
+    ' A fájl elérési útját módosítsd a sajátodra!
+    objShell.Run "python " & Chr(34) & "C:\EleresiUt\lakossag_app.py" & Chr(34)
+End Sub
+
+
+3. A PowerPoint 2. oldalán a gombra jobb klikk -> **Művelet beállítása (Action)** -> **Makró futtatása (Run Macro)** -> `InditPythonAlkalmazas`.
+
+A megadott Python kód automatikusan kezeli a szóközös számformátumot, a kereséseket, a férfi/nő népesség összegzését és a megyei statisztikákat.
