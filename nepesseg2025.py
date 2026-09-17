@@ -7,20 +7,17 @@ def adat_betoltes():
             if not sorok:
                 return adatok
                 
-            # Fejléc kihagyása (első sor)
             for sor in sorok[1:]:
                 sor = sor.strip()
                 if not sor:
                     continue
                 
-                # Pontosvessző mentén feldaraboljuk a sort
                 elemek = sor.split(';')
                 if len(elemek) >= 5:
                     megyekod = elemek[0].strip()
                     telepules = elemek[1].strip()
                     tipus = elemek[2].strip()
                     
-                    # Szóközök eltávolítása a számokból és átalakítás egész számmá
                     ferfi = int(elemek[3].replace(' ', '').strip())
                     no = int(elemek[4].replace(' ', '').strip())
                     
@@ -42,16 +39,12 @@ def soremeles():
     """Képernyő letisztításának szimulálása import os nélkül."""
     print("\n" * 40)
 
-# ==========================================
-# [1] MEGYE ADATAI FUNKCIÓ
-# ==========================================
 def megye_adatai(adatok):
     soremeles()
     print("=" * 60)
     print("         [1] MEGYE ADATAI - STATISZTIKA")
     print("=" * 60)
     
-    # Egyedi megyekódok kiszűrése és rendezése
     megyekodok = []
     for sor in adatok:
         if sor['megyekod'] not in megyekodok:
@@ -65,7 +58,6 @@ def megye_adatai(adatok):
     if kod == 'X':
         return
 
-    # Szűrés a megadott megyére
     szurt = [sor for sor in adatok if sor['megyekod'] == kod]
     
     if not szurt:
@@ -74,7 +66,6 @@ def megye_adatai(adatok):
         megye_adatai(adatok)
         return
 
-    # Statisztikák számítása
     telepulesek_szama = len(szurt)
     osszes_lakos = sum(sor['osszesen'] for sor in szurt)
     
@@ -91,16 +82,12 @@ def megye_adatai(adatok):
     print("-" * 60)
     input("\nNyomjon Enter-t a főmenübe való visszatéréshez...")
 
-# ==========================================
-# [2] TELEPÜLÉS TÍPUSAI & LAPOZÁS
-# ==========================================
 def telepules_tipusai(adatok):
     soremeles()
     print("=" * 60)
     print("         [2] TELEPÜLÉS TÍPUSAI - KIVÁLASZTÁS")
     print("=" * 60)
     
-    # Egyedi típusok kiszűrése és rendezése
     tipusok = []
     for sor in adatok:
         if sor['tipus'] not in tipusok:
@@ -120,7 +107,6 @@ def telepules_tipusai(adatok):
         kivalasztott_tipus = tipusok[int(valasz) - 1]
         szurt = [sor for sor in adatok if sor['tipus'] == kivalasztott_tipus]
         
-        # Településnév szerinti rendezés manuálisan lambda segítségével
         szurt.sort(key=lambda x: x['Település'])
         lapozos_listazas(szurt, kivalasztott_tipus)
     else:
@@ -132,7 +118,6 @@ def lapozos_listazas(szurt_adatok, tipus_nev):
     PAGE_SIZE = 15
     osszes_sor = len(szurt_adatok)
     
-    # Összes oldal kiszámítása math.ceil nélkül (egész osztással)
     osszes_oldal = (osszes_sor + PAGE_SIZE - 1) // PAGE_SIZE
     aktualis_oldal = 1
 
@@ -168,9 +153,6 @@ def lapozos_listazas(szurt_adatok, tipus_nev):
         elif parancs == 'X':
             break
 
-# ==========================================
-# FŐMENÜ
-# ==========================================
 def fomenu():
     adatok = adat_betoltes()
     if adatok is None:
